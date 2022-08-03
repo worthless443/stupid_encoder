@@ -97,6 +97,7 @@ void writeTofile(const char *fname, char *buffer)  {
 	}
 }
 
+// TODO move them to utils.c
 int incpointer(int *dest, int **src, int size) {
 	int i=0;
 	for(;i<size;i++) { 
