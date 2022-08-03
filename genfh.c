@@ -107,24 +107,7 @@ int incpointer(int *dest, int **src, int size) {
 	return 1;
 }
 
-int *test(int *vec) {
-	int *v  = malloc(1<<12);
-	int *vv = v; 
-	int size  = 1;
-	while(incpointer(vv,&vec,1)) {
-			v = realloc(v, size);
-			vv = v + size - 1;
-			size++;
-	}
-	//printf("nigger\n");
-	//for(int i=1;*vv!=0;i++)  {
-	//	vv = vv + 1;
-		//v = realloc(v,i);
-		//vv = v + (i-1);
-	return v;
-}
-
-int  *test1(int *vec)  {
+int  *copy_ptr(int *vec)  {
 	int *v = malloc(1<<12);
 	int  *vv = v;
 	int  size = 1;	
@@ -159,7 +142,7 @@ int  main(int argc, char **argv) {
 
 	}
 
-	printf("%s\n", genascii(buf,vec));
+	printf("%s\n", genascii(buf,copy_ptr(vec)));
 		
 		
 	//writeTofile("out.txt",buffer);
