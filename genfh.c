@@ -112,9 +112,9 @@ int *test(int *vec) {
 	int *vv = v; 
 	int size  = 1;
 	while(incpointer(vv,&vec,1)) {
-			v = realloc(v, size);
-			vv = v + (size - 2);
 			size+=1;
+			v = realloc(v, size);
+			vv = v + size;
 	}
 	//printf("nigger\n");
 	//for(int i=1;*vv!=0;i++)  {
@@ -127,11 +127,12 @@ int *test(int *vec) {
 int  *test1(int *vec)  {
 	int *v = malloc(1<<12);
 	int  *vv = v;
-	int  size = 1;	
+	int  size = 0;	
 	while(incpointer(vv,&vec,1))  {
-		size++;
-		v = realloc(v, size);
-		vv = v + size - 1;
+		v = realloc(v, size+1);
+		vv = v + size ;
+		size+=1;
+		//if(v[size]==0) break;
 	}
 	return v;
 
@@ -147,16 +148,23 @@ int  main(int argc, char **argv) {
 	char *buf = malloc(sizeof(char)*4096);
 	char *dat = buf;
 	int i=1;
+	//print_vec(test1(vec));
+	//return 0;
+	//int *juffer = malloc(1<<12);
+	//int *data = buffer;
+	 
 	print_vec(test1(vec));
-	char *buffer = malloc(10000);
-	while(fread(dat, 1,1,f)) {
+	
+/*
+	while(incpointer(data,&vec,1)) {
+		buffer = realloc(buf, i);
+		data = buffer+ i -1;
 		i++;
-		buf = realloc(buf, i);
-		dat = buf+ i -1;
-		
-		
-	}
+*/
+	//}
 
+	//print_vec(buffer);
+		
 	//writeTofile("out.txt",buffer);
 	//decode(vec,buffer);
 	return 0;
