@@ -29,18 +29,19 @@ char *printAscii(int i, int *vec) {
 	} 
 void print_vec(int *vec) {
 	for(int i=0;i<10;i++) {
+		if(vec[i]==0) break;
 		printf("%d ", vec[i]);
-}
+	}
 	printf("\n");
 }
 
 int *readkey(FILE *f) {
-	char *buf = malloc(sizeof(char)*6);
+	char *buf = malloc(sizeof(char)*60);
 	int skip=6; int *vec = malloc(sizeof(int)*100);
 	int ii=0;
 	while(fread(buf, skip,1,f)) {
 			for(int i=0;i<=skip;i+=1)  if(buf[i]==" "[0] || buf[i] == "\n"[0]) buf[i] = 1;
-			for(int i=0;i<4;i+=3) {
+			for(int i=0;i<skip-2;i+=3) {
 				char dat[2];
 				dat[0] = buf[i];
 				dat[1] = buf[i+1];
@@ -104,17 +105,16 @@ int incpointer(int *dest, int **src, int size) {
 	}
 	*src = *src + i;
 	return 1;
-	
 }
 
 int *test(int *vec) {
-	int *v  = malloc(40000);
+	int *v  = malloc(1<<12);
 	int *vv = v; 
 	int size  = 1;
 	while(incpointer(vv,&vec,1)) {
-			size+=1;
 			v = realloc(v, size);
-			vv = v + size;
+			vv = v + size - 1;
+			size++;
 	}
 	//printf("nigger\n");
 	//for(int i=1;*vv!=0;i++)  {
@@ -127,12 +127,11 @@ int *test(int *vec) {
 int  *test1(int *vec)  {
 	int *v = malloc(1<<12);
 	int  *vv = v;
-	int  size = 0;	
+	int  size = 1;	
 	while(incpointer(vv,&vec,1))  {
-		v = realloc(v, size+1);
-		vv = v + size ;
 		size+=1;
-		//if(v[size]==0) break;
+		v = realloc(v, size + (1<<12));
+		vv = v + size - 1;
 	}
 	return v;
 
@@ -153,17 +152,15 @@ int  main(int argc, char **argv) {
 	//int *juffer = malloc(1<<12);
 	//int *data = buffer;
 	 
-	print_vec(test1(vec));
-	
-/*
-	while(incpointer(data,&vec,1)) {
-		buffer = realloc(buf, i);
-		data = buffer+ i -1;
-		i++;
-*/
-	//}
+	//print_vec(test1(vec));
+	char buffer[1];
+	while(fread(buffer,1,1,f)) {
+		strcat(buf, buffer);
 
-	//print_vec(buffer);
+	}
+
+	printf("%s\n", genascii(buf,vec));
+		
 		
 	//writeTofile("out.txt",buffer);
 	//decode(vec,buffer);
